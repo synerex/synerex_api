@@ -104,8 +104,9 @@ enum GatewayType {
 }
 
 message GatewayInfo {
-    GatewayType gateway_type = 1;
-
+    fixed64 client_id = 1; // client_id (snowflake) of gateway
+    GatewayType gateway_type = 2;
+    repeated uint32 channels = 3; // which channel for forward
 }
 
 enum MsgType {
