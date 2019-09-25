@@ -9,28 +9,20 @@ import "google/protobuf/duration.proto";
 
 service Synerex {
     rpc NotifyDemand(Demand) returns (Response) {}
-
     rpc NotifySupply(Supply) returns (Response) {}
-
     rpc ProposeDemand(Demand) returns (Response) {}
-
     rpc ProposeSupply(Supply) returns (Response) {}
-
     rpc SelectSupply(Target) returns (ConfirmResponse) {}
-
     rpc SelectDemand(Target) returns (ConfirmResponse) {}
-
     rpc Confirm(Target) returns (Response){}
-
     rpc SubscribeDemand(Channel) returns (stream Demand) {}
-
     rpc SubscribeSupply(Channel) returns (stream Supply) {}
-
     rpc SubscribeMbus(Mbus) returns (stream MbusMsg) {}
-
     rpc SendMsg(MbusMsg) returns (Response){}
-
     rpc CloseMbus(Mbus) returns (Response){}
+
+    rpc SubscribeGateway(GatewayInfo) returns (stream GatewayMsg) {} // read messages
+    rpc ForwardToGateway(GatewayMsg) returns (Response){}            // send messages
 }
 
 message Response {
@@ -102,4 +94,37 @@ message MbusMsg {
     uint32 msg_type = 5;  // for message type
     string msg_info = 6;   // for abstract information
     string arg_json = 7;
+}
+
+enum GatewayType {
+    BIDIRECTIONAL = 0; // normal gateway
+    WRITE_ONLY = 1;    // no need to receive
+    READ_ONLY = 2;     //
+
+}
+
+message GatewayInfo {
+    GatewayType gateway_type = 1;
+
+}
+
+enum MsgType {
+    DEMAND = 0;
+    SUPPLY = 1;
+    TARGET = 2;   // target for select/confirm
+    MBUS = 3;     // mbus id for subscribe
+    MBUSMSG = 4;
+}
+
+// Subscribe from Gateway to SynerexServer
+message GatewayMsg{  // how to prevent loop!
+    fixed64 src_synerex_id = 1;
+    MsgType msg_type = 2; // massage type
+    oneof msg_oneof {
+        Demand demand = 3;
+        Supply supply = 4;
+        Target target = 5;
+        Mbus mbus = 6;
+        MbusMsg mbus_msg= 7;
+    }
 }
