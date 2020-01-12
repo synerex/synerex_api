@@ -23,6 +23,10 @@ service Synerex {
 
     rpc SubscribeGateway(GatewayInfo) returns (stream GatewayMsg) {} // read messages
     rpc ForwardToGateway(GatewayMsg) returns (Response){}            // send messages
+
+    rpc CloseDemandChannel(Channel) returns (Response){} // close demand channel
+    rpc CloseSupplyChannel(Channel) returns (Response){} // close supply channel
+    rpc CloseAllChannels(ProviderID) returns (Response){} // close all channels from Provider
 }
 
 message Response {
@@ -128,4 +132,9 @@ message GatewayMsg{  // how to prevent loop!
         Mbus mbus = 6;
         MbusMsg mbus_msg= 7;
     }
+}
+
+message ProviderID {
+    fixed64 client_id = 1;
+    string arg_json = 3;  // for Any Argument
 }
