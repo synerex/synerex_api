@@ -21,7 +21,7 @@ service Synerex {
     rpc CreateMbus(MbusOpt) returns (Mbus){}
     rpc CloseMbus(Mbus) returns (Response){}
     rpc SubscribeMbus(Mbus) returns (stream MbusMsg) {}
-    rpc SendMsg(MbusMsg) returns (Response){}
+    rpc SendMbusMsg(MbusMsg) returns (Response){}
     rpc GetMbusState(Mbus) returns (MbusState){}
 
     rpc SubscribeGateway(GatewayInfo) returns (stream GatewayMsg) {} // read messages
