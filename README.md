@@ -1,9 +1,14 @@
 # synerex_api
 Protocol Description for Synerex
 
+Synerex is a demand/supply exchange platform for supporting smart environment.
+
+## update history
+Since synerex v0.5.0 we add SelectModified{Supply/Demand}
 Since synerex v0.4.0 we update mbus specification.
 
-Synerex Protocol
+
+### Synerex Protocol
 
  4 types of messages.
     Demand
@@ -21,7 +26,9 @@ Synerex API:
     rpc ProposeDemand(Demand) returns (Response) {}
     rpc ProposeSupply(Supply) returns (Response) {}
     rpc SelectSupply(Target) returns (ConfirmResponse) {}
+    rpc SelectModifiedSupply(Supply) returns (ConfirmResponse) {}
     rpc SelectDemand(Target) returns (ConfirmResponse) {}
+    rpc SelectModifiedDemand(Demand) returns (ConfirmResponse) {}
     rpc Confirm(Target) returns (Response){}
     rpc SubscribeDemand(Channel) returns (stream Demand) {}
     rpc SubscribeSupply(Channel) returns (stream Supply) {}

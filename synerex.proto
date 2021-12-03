@@ -13,7 +13,9 @@ service Synerex {
     rpc ProposeDemand(Demand) returns (Response) {}
     rpc ProposeSupply(Supply) returns (Response) {}
     rpc SelectSupply(Target) returns (ConfirmResponse) {}
+    rpc SelectModifiedSupply(Supply) returns (ConfirmResponse) {} // select with modification(since 0.5.0)
     rpc SelectDemand(Target) returns (ConfirmResponse) {}
+//    rpc SelectModifiedDemand(Demand) returns (ConfirmResponse) {} // select with modification(since 0.5.1)
     rpc Confirm(Target) returns (Response){}
     rpc SubscribeDemand(Channel) returns (stream Demand) {}
     rpc SubscribeSupply(Channel) returns (stream Supply) {}
